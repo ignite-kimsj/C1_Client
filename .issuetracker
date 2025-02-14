@@ -1,0 +1,7 @@
+# Integration with Issue Tracker
+#
+# (note that '\' need to be escaped).
+
+[issuetracker "Jira Rule(C1)"]
+  regex = "C1-(\\d+)"
+  url = "https://jira.yourcompany.com/browse/C1-$1"
