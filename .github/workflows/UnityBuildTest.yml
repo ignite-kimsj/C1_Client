@@ -38,12 +38,11 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
-      
-      # Step4 - Upload Build File
-      - name: Upload Build File
-      - uses: actions/upload-artifact@v3
+
+      # Step4 - Output
+      - uses: actions/upload-artifact@v4
         with:
-          name: Build-Android
+          name: AOS Build
           path: build
 
       # Step5 - Notify To Slack
