@@ -44,3 +44,21 @@ jobs:
         with:
           name: Build-Android
           path: build
+
+      # Step5 - Notify To Slack
+      - name: Notify To Slack
+        if: always()
+        uses: 8398a7/action-slack@v3.16.2
+        with:
+          status: custom
+          fields: workflow,job,repo,author,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `*빌드 결과*: ${{ job.status }}\n\n *Workflow*: ${process.env.AS_WORKFLOW}\n\n *Repository*: ${process.env.AS_REPO}\n\n*실행한 사람*: ${process.env.AS_AUTHOR}\n\n*실행 시간*: ${process.env.AS_TOOK}\n\n *빌드 파일*: <${{ env.URL }}|${{ env.URLTEXT }}>`,
+                mrkdwn_in: ["text"],
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
